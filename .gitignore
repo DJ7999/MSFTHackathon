@@ -1,0 +1,92 @@
+# === General ===
+*.log
+*.env
+.env.*
+.DS_Store
+Thumbs.db
+*.swp
+*.bak
+*.tmp
+*.orig
+*.sublime-workspace
+*.sublime-project
+
+# === ASP.NET Core (ChatbotBackend) ===
+ChatbotBackend/bin/
+ChatbotBackend/obj/
+ChatbotBackend/.vs/
+ChatbotBackend/.vscode/
+ChatbotBackend/appsettings*.json
+ChatbotBackend/*.user
+ChatbotBackend/*.suo
+ChatbotBackend/TestResults/
+ChatbotBackend/coverage/
+ChatbotBackend/Migrations/ # if you don't want to version EF migrations
+
+# dotnet user secrets (optional)
+**/secrets.json
+
+# Local NuGet packages
+*.nupkg
+*.snupkg
+*.nuspec
+*.psmdcp
+*.symbols.nupkg
+
+# .NET-specific cache
+*.cache
+*.dbmdl
+*.dbproj.schemaview
+
+# === Rider IDE ===
+.idea/
+
+# === React (chat_frontend) ===
+chat_frontend/node_modules/
+chat_frontend/.next/
+chat_frontend/.cache/
+chat_frontend/build/
+chat_frontend/dist/
+chat_frontend/.eslintcache
+chat_frontend/yarn.lock
+chat_frontend/package-lock.json
+chat_frontend/coverage/
+chat_frontend/.turbo/
+chat_frontend/.parcel-cache/
+
+# === OS-Specific ===
+ehthumbs.db
+Icon?
+Desktop.ini
+$RECYCLE.BIN/
+
+# === Editor & Tool Specific ===
+*.vscode/*
+*.code-workspace
+*.vspscc
+*.vssscc
+*.userosscache
+*.sln.docstates
+
+# === Docker-related (if applicable) ===
+*.tar
+docker-compose.override.yml
+
+# === Testing tools ===
+*.testresult
+*.coverage
+*.coveragexml
+*.trx
+
+# === Temporary scripts, tools, misc ===
+tools/
+scripts/
+*.sh
+*.cmd
+
+# === Environment-specific ===
+*.local
+*.env.local
+*.env.development.local
+*.env.test.local
+*.env.production.local
