@@ -4,7 +4,7 @@ using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.AzureOpenAI;
 using Newtonsoft.Json;
 
-namespace ChatbotBackend.AgentRouter
+namespace ChatbotBackend.PrimaryAgents
 {
     public class AgentRouter : IAgentRouter
     {

@@ -1,4 +1,5 @@
-﻿using ChatbotBackend.Repository;
+﻿using ChatbotBackend.Models;
+using ChatbotBackend.Repository;
 using Microsoft.SemanticKernel;
 using System.ComponentModel;
 

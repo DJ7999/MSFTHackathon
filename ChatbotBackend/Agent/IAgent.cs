@@ -1,4 +1,6 @@
-﻿namespace ChatbotBackend.Agent
+﻿using ChatbotBackend.Models;
+
+namespace ChatbotBackend.Agent
 {
     public interface IAgent
     {

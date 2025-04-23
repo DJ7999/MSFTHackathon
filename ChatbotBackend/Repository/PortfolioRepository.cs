@@ -1,4 +1,5 @@
 ﻿using ChatbotBackend.EntityFramework;
+using ChatbotBackend.Models;
 using ChatbotBackend.Models.DbModel;
 using ChatbotBackend.Models.DTO;
 using ChatbotBackend.Services;

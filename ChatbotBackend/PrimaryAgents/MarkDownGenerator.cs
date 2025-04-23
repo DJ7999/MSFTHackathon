@@ -1,8 +1,7 @@
-﻿
-using Microsoft.SemanticKernel;
+﻿using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
 
-namespace ChatbotBackend.MarkDown
+namespace ChatbotBackend.PrimaryAgents
 {
     public class MarkDownGenerator : IMarkDownGenerator
     {

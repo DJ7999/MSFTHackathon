@@ -1,4 +1,6 @@
-﻿namespace ChatbotBackend.Manager
+﻿using ChatbotBackend.Models;
+
+namespace ChatbotBackend.PrimaryAgents
 {
     public interface ISessionManager
     {

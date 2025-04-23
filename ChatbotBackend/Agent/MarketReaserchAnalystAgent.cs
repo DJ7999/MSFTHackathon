@@ -1,4 +1,5 @@
-﻿using ChatbotBackend.Plugins;
+﻿using ChatbotBackend.Models;
+using ChatbotBackend.Plugins;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.AzureOpenAI;

@@ -1,8 +1,7 @@
 ﻿using ChatbotBackend.Agent;
-using ChatbotBackend.AgentRouter;
-using ChatbotBackend.Helper;
-using ChatbotBackend.Manager;
-using ChatbotBackend.MarkDown;
+using ChatbotBackend.Models;
+using ChatbotBackend.PrimaryAgents;
+using ChatbotBackend.Services;
 using Microsoft.AspNetCore.SignalR;
 using System.Collections.Concurrent;
 

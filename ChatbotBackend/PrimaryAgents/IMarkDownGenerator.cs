@@ -1,4 +1,4 @@
-﻿namespace ChatbotBackend.MarkDown
+﻿namespace ChatbotBackend.PrimaryAgents
 {
     public interface IMarkDownGenerator
     {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.Data;
 
-namespace ChatbotBackend.Helper
+namespace ChatbotBackend.Services
 {
     public class TextSearchHelper
     {

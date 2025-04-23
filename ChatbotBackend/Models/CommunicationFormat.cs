@@ -1,4 +1,4 @@
-﻿namespace ChatbotBackend
+﻿namespace ChatbotBackend.Models
 {
     public class CommunicationFormat
     {

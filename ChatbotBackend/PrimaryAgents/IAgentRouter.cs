@@ -1,6 +1,6 @@
 ﻿using ChatbotBackend.Agent;
 
-namespace ChatbotBackend.AgentRouter
+namespace ChatbotBackend.PrimaryAgents
 {
     public interface IAgentRouter
     {

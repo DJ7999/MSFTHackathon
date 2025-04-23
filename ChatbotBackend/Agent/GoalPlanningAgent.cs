@@ -1,4 +1,5 @@
 ﻿
+using ChatbotBackend.Models;
 using ChatbotBackend.Plugins;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
