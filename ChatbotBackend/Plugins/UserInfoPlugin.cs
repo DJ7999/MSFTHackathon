@@ -8,7 +8,8 @@ namespace ChatbotBackend.Plugins
     public class UserInfoPlugin
     {
         private readonly IUserRepository _userRepository;
-        public UserInfoPlugin(IUserRepository userRepository) { 
+        public UserInfoPlugin(IUserRepository userRepository)
+        {
             _userRepository = userRepository;
         }
 
@@ -22,7 +23,7 @@ namespace ChatbotBackend.Plugins
         [KernelFunction]
         [Description("update user monthly expense")]
         public async Task UpdateUserExpense(
-            [Description("users monthly expense.")]float monthlyExpense)
+            [Description("users monthly expense.")] float monthlyExpense)
         {
             await _userRepository.UpdateUserMonthlyExpense(monthlyExpense);
         }

@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace ChatbotBackend.Models.DbModel
+﻿namespace ChatbotBackend.Models.DbModel
 {
     public class Portfolio
     {

@@ -1,12 +1,15 @@
 ﻿
 using ChatbotBackend.Models;
 using ChatbotBackend.Plugins;
+using ChatbotBackend.Services;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.AzureOpenAI;
+using System.ComponentModel;
 
 namespace ChatbotBackend.Agent
 {
+    
     public class RetirementPlanningAgent : IAgent
     {
         private readonly IChatCompletionService chatCompletionService;
@@ -20,17 +23,7 @@ namespace ChatbotBackend.Agent
             this.kernel.ImportPluginFromObject(retirementPlugin);
             this.kernel.ImportPluginFromObject(userInfoPlugin);
             this.kernel.ImportPluginFromType<FinancePlugin>();
-            chatHistory = new ChatHistory($"You are a highly intelligent Retirement Planning Agent specializing in helping users with retirement planning queries."+
-"user current retirement plan can be retrieved using retirementPlugin if there iis any and users info can be retrieved using userinfo plugin if available"+
-"When a user asks about retirement planning, please gather the following information before creating a plan:" +
-"- monthly expenditure"+
-"- Desired retirement age or time frame" +
-"Your process should be:" +
-"calculate yearly expense" +
-"Calculate the FIRE number considering yearly expense" +
-"calculate inflation adjusted fire number" +
-"Create an SIP recommendation: Based on the inflation adjusted FIRE number" +
-"confirm with user before saving it also if user provide his monthly expenditure and salary save  it.  Note : behave more human like and give short responses");
+            chatHistory = new ChatHistory(Prompts.RETIREMENT_AGENT_PROMPT);
             FunctionChoiceBehaviorOptions functionChoiceBehaviorOptions = new FunctionChoiceBehaviorOptions()
             {
                 AllowConcurrentInvocation = false,

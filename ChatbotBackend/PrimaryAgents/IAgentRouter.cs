@@ -1,10 +1,10 @@
-﻿using ChatbotBackend.Agent;
+﻿using static ChatbotBackend.PrimaryAgents.AgentRouter;
 
 namespace ChatbotBackend.PrimaryAgents
 {
     public interface IAgentRouter
     {
-        Task<(IAgent? Agent, string ResponseMessage)> GetAgentAsync(string message);
+        Task<RouterResponse> GetAgentAsync(string message);
 
         void UpdateRouterMemory(string message, string author);
     }

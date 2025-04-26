@@ -8,8 +8,9 @@ namespace ChatbotBackend.Plugins
     public class RetirementPlugin
     {
         private readonly IRetirementRepository _retirementRepository;
-        public RetirementPlugin(IRetirementRepository retirementRepository) { 
-        _retirementRepository = retirementRepository;
+        public RetirementPlugin(IRetirementRepository retirementRepository)
+        {
+            _retirementRepository = retirementRepository;
         }
 
         [KernelFunction]

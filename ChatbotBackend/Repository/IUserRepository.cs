@@ -1,5 +1,4 @@
-﻿using ChatbotBackend.Models.DbModel;
-using ChatbotBackend.Models.DTO;
+﻿using ChatbotBackend.Models.DTO;
 
 namespace ChatbotBackend.Repository
 {

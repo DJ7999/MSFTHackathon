@@ -71,7 +71,7 @@ namespace ChatbotBackend.Repository
             return postfolioModels.Select(p => new PortfolioDto { AssetName = p.AssetName, Quantity = p.Quantity, Value = GetEachStockValue(p.AssetName) * p.Quantity }).ToList();
         }
 
-        private float GetEachStockValue(string ticker)
+        private double GetEachStockValue(string ticker)
         {
             var price = StockServices.GetLatestPriceAsync(ticker).Result;
             if (!price.HasValue) throw new Exception("unable to find market value of asset ticker");

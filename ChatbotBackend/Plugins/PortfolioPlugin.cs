@@ -1,5 +1,7 @@
-﻿using ChatbotBackend.Models.DTO;
+﻿using ChatbotBackend.Models;
+using ChatbotBackend.Models.DTO;
 using ChatbotBackend.Repository;
+using ChatbotBackend.Services;
 using Microsoft.SemanticKernel;
 using System.ComponentModel;
 
@@ -8,7 +10,8 @@ namespace ChatbotBackend.Plugins
     public class PortfolioPlugin
     {
         private readonly IPortfolioRepository repository;
-        public PortfolioPlugin(IPortfolioRepository portfolioRepository) { 
+        public PortfolioPlugin(IPortfolioRepository portfolioRepository)
+        {
             repository = portfolioRepository;
         }
 
@@ -37,5 +40,15 @@ namespace ChatbotBackend.Plugins
             var result = await repository.GetPortfolioDto();
             return result;
         }
+
+        [KernelFunction]
+        [Description("You can perform fundamental analysis on the given stock name and pass a verdict ")]
+        public async Task<StockVerdict> CompanyVerdictPlugin([Description("Ticker is a company ticker supported by Screener website")] string ticker)
+        {
+            var result = await StockServices.Analyze(ticker);
+            return result;
+        }
+
+
     }
 }

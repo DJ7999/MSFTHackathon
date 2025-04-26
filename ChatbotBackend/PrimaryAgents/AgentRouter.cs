@@ -1,4 +1,6 @@
 ﻿using ChatbotBackend.Agent;
+using ChatbotBackend.Plugins;
+using ChatbotBackend.Services;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.AzureOpenAI;
@@ -11,18 +13,14 @@ namespace ChatbotBackend.PrimaryAgents
         private readonly Func<string, IAgent> _agentFactory;
         private readonly AzureOpenAIPromptExecutionSettings routerPromptExecutionsetting;
         readonly IChatCompletionService _chatCompletionService;
+        private readonly Kernel _kernel;
         ChatHistory _history;
         public AgentRouter(Kernel kernel, Func<string, IAgent> agentFactory)
         {
-            _chatCompletionService = kernel.GetRequiredService<IChatCompletionService>();
-            _history = new ChatHistory($@"You are an intelligent Agent Router specialized in directing 
-                                          finance-related queries to the appropriate agent.
-                                          Based on the user's input, select the most suitable agent from the following list:
-                                          {string.Join("| ", GetAllAgents())}
-                                          Respond with agent name if you think user query matches to some agent other wise respond message for user 
-                                          mentioning supported agents
-                                        Important: Ensure that the selection is based solely on the information provided 
-                                        in the user's query. Do not make assumptions beyond the given data.");
+            _kernel = kernel.Clone();
+            _kernel.ImportPluginFromType<FinancePlugin>();
+            _chatCompletionService = _kernel.GetRequiredService<IChatCompletionService>();
+            _history = new ChatHistory(Prompts.AGENT_ROUTER_PROMPT);
             _agentFactory = agentFactory;
             routerPromptExecutionsetting = new AzureOpenAIPromptExecutionSettings
             {
@@ -30,7 +28,7 @@ namespace ChatbotBackend.PrimaryAgents
             };
         }
 
-        private IEnumerable<string> GetAllAgents()
+        public static IEnumerable<string> GetAllAgents()
         {
             return AppDomain.CurrentDomain.GetAssemblies()
             .SelectMany(assembly => assembly.GetTypes())
@@ -38,43 +36,43 @@ namespace ChatbotBackend.PrimaryAgents
             .Select(type => type.Name);
         }
 
-        public async Task<(IAgent? Agent, string ResponseMessage)> GetAgentAsync(string message)
+        public async Task<RouterResponse> GetAgentAsync(string message)
         {
             _history.AddUserMessage(message);
 
-            var responseContent = await _chatCompletionService.GetChatMessageContentAsync(_history, executionSettings: routerPromptExecutionsetting);
+            var responseContent = await _chatCompletionService.GetChatMessageContentAsync(_history, executionSettings: routerPromptExecutionsetting, _kernel);
 
-            IAgent agent = null;
-            string responseMessage = string.Empty;
+
 
             try
             {
                 var response = JsonConvert.DeserializeObject<AgentResponse>(responseContent.ToString());
-
-                if (!string.IsNullOrEmpty(response.Agent))
+                List<AgentPrompt> agents = new List<AgentPrompt>();
+                if (response != null & response.Agents.Any())
                 {
-                    agent = _agentFactory(response.Agent);
-
-                    if (agent == null)
+                    foreach (var Agent in response.Agents)
                     {
-                        responseMessage = "Unable to complete your request at the moment.";
+                        agents.Add(new AgentPrompt
+                        {
+                            Agent = _agentFactory(Agent.AgentName),
+                            Prompt = Agent.AgentPrompt,
+                        });
                     }
+
                 }
-                else
+                return new RouterResponse
                 {
-                    responseMessage = response.Message ?? "An unexpected error occurred.";
-                }
-            }
-            catch (JsonException ex)
-            {
-                responseMessage = $"Failed to parse the response: {ex.Message}";
+                    Agents = agents,
+                    UserMessage = response.UserMessage
+                };
+
+
+
             }
             catch (Exception ex)
             {
-                responseMessage = $"An error occurred: {ex.Message}";
+                throw;
             }
-
-            return (agent, responseMessage);
         }
 
         public void UpdateRouterMemory(string message, string author)
@@ -85,10 +83,27 @@ namespace ChatbotBackend.PrimaryAgents
         }
 
         // Define a class that matches the expected structure of the JSON response
-        private class AgentResponse
+        public class AgentResponse
         {
-            public string? Agent { get; set; }
-            public string? Message { get; set; }
+            public List<AgentInfo>? Agents { get; set; }
+            public string? UserMessage { get; set; }
+        }
+        public class AgentInfo
+        {
+            public string? AgentName { get; set; }
+
+            public string? AgentPrompt { get; set; }
+        }
+        public class RouterResponse
+        {
+            public List<AgentPrompt>? Agents { get; set; }
+            public string? UserMessage { get; set; }
+        }
+        public class AgentPrompt
+        {
+            public IAgent Agent { get; set; }
+
+            public string? Prompt { get; set; }
         }
     }
 }

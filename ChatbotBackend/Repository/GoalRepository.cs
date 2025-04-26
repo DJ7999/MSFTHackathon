@@ -47,7 +47,7 @@ namespace ChatbotBackend.Repository
         public async Task RemoveGoal(string goal)
         {
             var goals = await GetGoalModels();
-            var existingGoal = goals.Where(g => string.Equals(g.Name, goal,StringComparison.OrdinalIgnoreCase)).SingleOrDefault();
+            var existingGoal = goals.Where(g => string.Equals(g.Name, goal, StringComparison.OrdinalIgnoreCase)).SingleOrDefault();
             if (existingGoal != null)
             {
 

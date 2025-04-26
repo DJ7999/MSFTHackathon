@@ -5,7 +5,6 @@ using ChatbotBackend.Models;
 using ChatbotBackend.Plugins;
 using ChatbotBackend.PrimaryAgents;
 using ChatbotBackend.Repository;
-using ChatbotBackend.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.SemanticKernel;
 
@@ -40,8 +39,7 @@ builder.Services.AddScoped(serviceProvider =>
         apiKey: configuration["AzureOpenAI:ApiKey"],
         endpoint: configuration["AzureOpenAI:Endpoint"]
     );
-    kernelBuilder.AddGoogleTextSearch(configuration["GoogleSearch:SearchEngineId"], configuration["GoogleSearch:APIKey"]);
-
+    
     return kernelBuilder.Build();
 });
 
@@ -54,18 +52,13 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRetirementRepository, RetirementRepository>();
 builder.Services.AddScoped<IPortfolioRepository, PortfolioRepository>();
 builder.Services.AddScoped<IGoalRepository, GoalRepository>();
-builder.Services.AddScoped<TextSearchHelper>();
-builder.Services.AddScoped<MarketReaserchPlugin>();
-builder.Services.AddScoped<FinancialMetricsPlugin>();
 builder.Services.AddScoped<SessionManagerPlugin>();
 builder.Services.AddScoped<RetirementPlanningAgent>();
 builder.Services.AddScoped<RetirementPlugin>();
 builder.Services.AddScoped<UserInfoPlugin>();
-builder.Services.AddScoped<GoalPlugin>();  
+builder.Services.AddScoped<GoalPlugin>();
 builder.Services.AddScoped<PortfolioPlugin>();
 builder.Services.AddScoped<GoalPlanningAgent>();
-builder.Services.AddScoped<FinanceAgent>();
-builder.Services.AddScoped<MarketReaserchAnalystAgent>();
 builder.Services.AddScoped<PortfolioManagerAgent>();
 
 // Factory to resolve IAgent from name

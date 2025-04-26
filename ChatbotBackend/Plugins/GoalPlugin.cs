@@ -8,14 +8,15 @@ namespace ChatbotBackend.Plugins
     public class GoalPlugin
     {
         private readonly IGoalRepository goalRepository;
-        public GoalPlugin(IGoalRepository goalRepository) {
+        public GoalPlugin(IGoalRepository goalRepository)
+        {
             this.goalRepository = goalRepository;
         }
 
 
         [KernelFunction]
         [Description("creates or updates existing goals name change is not allowed you have to create new goal and delete existing")]
-        public async Task UpdateGoals( GoalDto goal)
+        public async Task UpdateGoals(GoalDto goal)
         {
             await goalRepository.AddUpdateGoal(goal);
         }

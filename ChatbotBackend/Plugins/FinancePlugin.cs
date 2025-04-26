@@ -46,25 +46,14 @@ namespace ChatbotBackend.Plugins
         }
 
         [KernelFunction]
-        [Description("Calculates the future equivalent value of today's amount considering inflation.")]
-        public Task<double> CalculateInflatedValueAsync(
-        [Description("The current amount in today's currency.")] double presentAmount,
-        [Description("Number of years in the future.")] int years,
-        [Description("Annual inflation rate in percentage we consider 6% by default.")] double inflationRate = 6)
+        [Description("Calculates the future value of today's amount considering inflation.")]
+        public Task<double> AdjustForInflationAsync(
+            [Description("The amount of money you have today.")] double presentAmount,
+            [Description("Number of years into the future.")] int years,
+            [Description("Yearly inflation rate in percent (default is 6%).")] double inflationRate = 6)
         {
             double futureValue = presentAmount * Math.Pow(1 + inflationRate / 100, years);
             return Task.FromResult(Math.Round(futureValue, 2));
-        }
-
-        [KernelFunction]
-        [Description("Calculates the present equivalent value of a future amount considering inflation.")]
-        public Task<double> CalculateDeflatedValueAsync(
-            [Description("The future amount in currency.")] double futureAmount,
-            [Description("Number of years in the future.")] int years,
-            [Description("Annual inflation rate in percentage we consider 6% by default.")] double inflationRate = 6)
-        {
-            double presentValue = futureAmount / Math.Pow(1 + inflationRate / 100, years);
-            return Task.FromResult(Math.Round(presentValue, 2));
         }
     }
 }

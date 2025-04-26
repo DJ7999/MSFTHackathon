@@ -1,5 +1,6 @@
 ﻿using ChatbotBackend.Models;
 using ChatbotBackend.Plugins;
+using ChatbotBackend.Services;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.AzureOpenAI;
@@ -17,10 +18,7 @@ namespace ChatbotBackend.PrimaryAgents
             this.kernel = kernel.Clone();
             chatCompletion = this.kernel.GetRequiredService<IChatCompletionService>();
             this.kernel.ImportPluginFromObject(plugin);
-            history = new ChatHistory("You are responsible making existing user signin and making new user sign up and ask them necessary information to complete this." +
-                "necessary information is username and password" +
-                "if plugin respond with non zero value it means signin or signup is successfull else responde with if Signin failed Username or password is incorrect if" +
-                "SignUp failed Username is already in use  note -- you will only act on the given information");
+            history = new ChatHistory(Prompts.AUTH_PROMPT);
         }
 
         public async Task<CommunicationFormat> TryGetUsersession(string prompt)

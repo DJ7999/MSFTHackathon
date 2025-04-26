@@ -1,9 +1,9 @@
-﻿using ChatbotBackend.Agent;
-using ChatbotBackend.Models;
+﻿using ChatbotBackend.Models;
 using ChatbotBackend.PrimaryAgents;
 using ChatbotBackend.Services;
 using Microsoft.AspNetCore.SignalR;
 using System.Collections.Concurrent;
+using static ChatbotBackend.PrimaryAgents.AgentRouter;
 
 namespace ChatbotBackend
 {
@@ -18,16 +18,15 @@ namespace ChatbotBackend
         private IAgentRouter _agentRouter;
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly IMarkDownGenerator _markDownGenerator;
-        private readonly TextSearchHelper textSearchHelper;
         private ISessionManager _sessionManager;
         UserContext _userContext;
 
-        public ChatHub(IAgentRouter agentRouter, IServiceScopeFactory scopeFactory, IMarkDownGenerator markDownGenerator, TextSearchHelper textSearch)
+        public ChatHub(IAgentRouter agentRouter, IServiceScopeFactory scopeFactory, IMarkDownGenerator markDownGenerator)
         {
             _scopeFactory = scopeFactory;
             _markDownGenerator = markDownGenerator;
 
-            textSearchHelper = textSearch;
+            
             _agentRouter = agentRouter;
 
 
@@ -81,19 +80,24 @@ namespace ChatbotBackend
             {
                 _agentRouter = router;
             }
-            (IAgent? agent, string message) = await _agentRouter.GetAgentAsync(input.Message);
-            if (agent == null)
+
+            RouterResponse routerResponse = await _agentRouter.GetAgentAsync(input.Message);
+            if (!string.IsNullOrWhiteSpace(routerResponse.UserMessage))
+                await Clients.Caller.SendAsync("ReceiveMessage", "Assistant", routerResponse.UserMessage);
+
+            if (routerResponse.Agents == null)
             {
-                await Clients.Caller.SendAsync("ReceiveMessage", "Assistant", message);
                 return;
             }
             _router[Context.ConnectionId] = _agentRouter; // cache it now
 
-
-            CommunicationFormat output = await agent.GetAgentResponseAsync(input.Message);
-            _agentRouter.UpdateRouterMemory(output.Message, output.User);
-            output.Message = await _markDownGenerator.GenerateMarkdown(output.Message);
-            await Clients.Caller.SendAsync("ReceiveMessage", output.User, output.Message);
+            foreach (var agent in routerResponse.Agents)
+            {
+                CommunicationFormat output = await agent.Agent.GetAgentResponseAsync(agent.Prompt);
+                _agentRouter.UpdateRouterMemory(output.Message, output.User);
+                output.Message = await _markDownGenerator.GenerateMarkdown(output.Message);
+                await Clients.Caller.SendAsync("ReceiveMessage", output.User, output.Message);
+            }
         }
     }
 }

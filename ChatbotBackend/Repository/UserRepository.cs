@@ -27,9 +27,12 @@ namespace ChatbotBackend.Repository
         public async Task<UserDto> GetUser()
         {
             var user = await GetUserModel();
-            return new UserDto { MonthlyExpense = user.MonthlyExpense,
-            MonthlySalary = user.MonthlySalary,
-            Name = user.Name};
+            return new UserDto
+            {
+                MonthlyExpense = user.MonthlyExpense,
+                MonthlySalary = user.MonthlySalary,
+                Name = user.Name
+            };
         }
 
         public async Task<int> SignIn(string username, string password)
