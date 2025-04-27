@@ -41,7 +41,7 @@ namespace ChatbotBackend.Agent
             chatHistory.AddAssistantMessage(response?.Content ?? "");
             return new CommunicationFormat()
             {
-                User = nameof(RetirementPlanningAgent),
+                User = nameof(PortfolioManagerAgent),
                 Message = response.ToString()
             };
         }

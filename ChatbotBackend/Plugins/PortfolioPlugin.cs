@@ -18,7 +18,7 @@ namespace ChatbotBackend.Plugins
         [KernelFunction]
         [Description("add investment to portfolio ")]
         public async Task AddInvestmentToPortfolio(
-        [Description("ticker value of asset name supported by yfinance")] string ticker,
+        [Description("ticker value of asset name supported by screener website")] string ticker,
         [Description("Quantity of assets bought")] int quantity)
         {
             await repository.AddUpdatePortfolio(new PortfolioDto { AssetName = ticker, Quantity = quantity });
@@ -27,7 +27,7 @@ namespace ChatbotBackend.Plugins
         [KernelFunction]
         [Description("remove oor sell investment to portfolio ")]
         public async Task RemoveInvestmentToPortfolio(
-        [Description("ticker value of asset name supported by yfinance")] string ticker,
+        [Description("ticker value of asset name supported by screener website")] string ticker,
         [Description("Quantity of assets sold")] int quantity)
         {
             await repository.RemoveUpdatePortfolio(new PortfolioDto { AssetName = ticker, Quantity = quantity });

@@ -60,9 +60,18 @@ namespace ChatbotBackend.Services
         }
         public async static Task<StockVerdict> Analyze(string ticker)
         {
-            var companyFinancial = await ScreenerFinanceScraper.ScrapeCompanyAsync(ticker);
-            var verdict = Verdict(companyFinancial);
-            return verdict;
+            try
+            {
+                var companyFinancial = await ScreenerFinanceScraper.ScrapeCompanyAsync(ticker);
+                var verdict = Verdict(companyFinancial);
+                return verdict;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                throw new Exception ("we are currently not supporting this investment");
+            }
+            
         }
     }
 }

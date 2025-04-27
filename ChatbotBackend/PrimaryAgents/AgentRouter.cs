@@ -48,7 +48,7 @@ namespace ChatbotBackend.PrimaryAgents
             {
                 var response = JsonConvert.DeserializeObject<AgentResponse>(responseContent.ToString());
                 List<AgentPrompt> agents = new List<AgentPrompt>();
-                if (response != null & response.Agents.Any())
+                if (response?.Agents != null)
                 {
                     foreach (var Agent in response.Agents)
                     {
@@ -63,7 +63,7 @@ namespace ChatbotBackend.PrimaryAgents
                 return new RouterResponse
                 {
                     Agents = agents,
-                    UserMessage = response.UserMessage
+                    UserMessage = response?.UserMessage ?? ""
                 };
 
 

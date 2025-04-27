@@ -55,7 +55,7 @@ namespace ChatbotBackend.Repository
             }
             if (investment.Quantity > portfolio.Quantity)
             {
-                investment.Quantity += portfolio.Quantity;
+                investment.Quantity -= portfolio.Quantity;
                 _context.Portfolios.Update(investment);
             }
             else

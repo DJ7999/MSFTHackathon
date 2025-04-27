@@ -167,7 +167,7 @@ Guidelines:
             - **Clarity**: Use simple language and avoid technical jargon.
             - **Structure**: When presenting analyses, start with the verdict, followed by the explanation.
 
-            **Note**: When invoking plugins, use the company's ticker symbol as recognized by Yahoo Finance.
+            **Note**: When invoking plugins, use the company's ticker symbol as recognized by Screener Website.
             ";
 
         public static string MarkdownPrompt = @"You are a personable AI assistant dedicated to delivering information in a clear, engaging, and empathetic manner.
