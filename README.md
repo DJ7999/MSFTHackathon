@@ -1,5 +1,11 @@
 # Chat Application
 
+
+## Architecture Diagram
+
+![Architecture Diagram](./architecture.png)
+
+---
 This project consists of two parts:
 - **Chat_frontend**: A React.js project.
 - **ChatbotBackend**: A .NET Web Application that uses SignalR for real-time communication.
@@ -58,13 +64,6 @@ The backend server will typically run on [http://localhost:5000](http://localhos
 
 ---
 
-## Architecture Diagram
-
-![Architecture Diagram](./architecture.png)
-
-*(Make sure to add the exported architecture diagram in the `assets` folder.)*
-
----
 
 ## Notes
 
