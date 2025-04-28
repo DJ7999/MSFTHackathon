@@ -83,8 +83,7 @@ The React app will typically run on [http://localhost:3000](http://localhost:300
     ```
 
 The backend server will typically run on:
-- [http://localhost:5000](http://localhost:5000) (HTTP)
-- [https://localhost:5001](https://localhost:5001) (HTTPS)
+- [http://localhost:5053/chat]((http://localhost:5053/chat)) (HTTP)
 
 ---
 
