@@ -1,14 +1,22 @@
 # Chat Application
 
-
 ## Architecture Diagram
 
 ![Architecture Diagram](./architecture.png)
 
 ---
+
+## DEMO
+
+[![Watch the Demo](https://img.youtube.com/vi/X02VpDgd2Pk/maxresdefault.jpg)](https://youtu.be/X02VpDgd2Pk)
+
+---
+
+## SETUP
+
 This project consists of two parts:
 - **Chat_frontend**: A React.js project.
-- **ChatbotBackend**: A .NET Web Application that uses SignalR for real-time communication.
+- **ChatbotBackend**: A .NET Web Application that uses SignalR for real-time communication and Entity Framework Core for database operations.
 
 ---
 
@@ -40,6 +48,12 @@ The React app will typically run on [http://localhost:3000](http://localhost:300
 
 ## ChatbotBackend (.NET Web Application)
 
+### Technologies Used
+
+- ASP.NET Core Web API
+- SignalR (real-time communication)
+- Entity Framework Core (database access)
+
 ### Setup & Run
 
 1. Navigate to the `ChatbotBackend` directory:
@@ -54,20 +68,44 @@ The React app will typically run on [http://localhost:3000](http://localhost:300
     dotnet restore
     ```
 
-3. Run the application:
+3. Update your `appsettings.json` as described below.
+
+4. Apply Entity Framework Core migrations and update the database:
+
+    ```bash
+    dotnet ef database update
+    ```
+
+5. Run the application:
 
     ```bash
     dotnet run
     ```
 
-The backend server will typically run on [http://localhost:5000](http://localhost:5000) or [https://localhost:5001](https://localhost:5001).
+The backend server will typically run on:
+- [http://localhost:5000](http://localhost:5000) (HTTP)
+- [https://localhost:5001](https://localhost:5001) (HTTPS)
 
 ---
 
+### Configuration (`appsettings.json`)
 
-## Notes
+Before running the backend, create or update your `appsettings.json` file as follows:
 
-- Ensure both frontend and backend are running for full functionality.
-- The frontend connects to the backend via SignalR for real-time messaging.
+```json
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
 
----
+  "AzureOpenAI": {
+    "Endpoint": "enter endpoint for azure openai deployment",
+    "ApiKey": "API key",
+    "DeploymentName": "gpt-4o-mini"
+  },
+  
+  "AllowedHosts": "*"
+}
