@@ -27,7 +27,7 @@ This project consists of two parts:
 1. Navigate to the `Chat_frontend` directory:
 
     ```bash
-    cd Chat_frontend
+    cd chat_frontend
     ```
 
 2. Install dependencies:
